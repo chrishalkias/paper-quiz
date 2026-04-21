@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paper Quiz</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f8f7f4;
+      --surface: #ffffff;
+      --border: #e2e0da;
+      --text: #1a1917;
+      --muted: #6b6863;
+      --accent: #2563eb;
+      --accent-light: #eff6ff;
+      --success: #16a34a;
+      --success-bg: #f0fdf4;
+      --error: #dc2626;
+      --error-bg: #fef2f2;
+      --warning-bg: #fffbeb;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 2rem 1rem;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      margin-bottom: 0.75rem;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 0.875rem;
+      color: var(--muted);
+    }
+
+    .progress-bar {
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: width 0.3s ease;
+      width: 0%;
+    }
+
+    .question-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      margin-bottom: 1.25rem;
+      transition: border-color 0.2s;
+    }
+
+    .question-card.answered { border-color: var(--accent); }
+    .question-card.correct  { border-color: var(--success); background: var(--success-bg); }
+    .question-card.incorrect { border-color: var(--error); background: var(--error-bg); }
+    .question-card.revealed { border-color: #d97706; background: var(--warning-bg); }
+
+    .question-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .question-num {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    .question-type-badge {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.5rem;
+      border-radius: 3px;
+    }
+    .badge-mcq { background: #e0e7ff; color: #3730a3; }
+    .badge-open { background: #fce7f3; color: #9d174d; }
+
+    .question-text {
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1.5;
+      margin-bottom: 1.25rem;
+    }
+
+    /* MCQ options */
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .option-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      font-size: 0.9375rem;
+    }
+
+    .option-label:hover { border-color: var(--accent); background: var(--accent-light); }
+
+    input[type="radio"] { display: none; }
+    input[type="radio"]:checked + .option-label {
+      border-color: var(--accent);
+      background: var(--accent-light);
+      font-weight: 500;
+    }
+
+    .option-label.correct-answer {
+      border-color: var(--success) !important;
+      background: var(--success-bg) !important;
+      font-weight: 600;
+    }
+
+    .option-label.wrong-answer {
+      border-color: var(--error) !important;
+      background: var(--error-bg) !important;
+      text-decoration: line-through;
+      opacity: 0.7;
+    }
+
+    .option-indicator {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--muted);
+      margin-top: 1px;
+    }
+
+    /* Open-ended textarea */
+    .open-textarea {
+      width: 100%;
+      min-height: 120px;
+      padding: 0.75rem 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      resize: vertical;
+      transition: border-color 0.15s;
+      background: #fafaf9;
+    }
+    .open-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: var(--surface);
+    }
+    .open-textarea:disabled {
+      opacity: 0.7;
+      cursor: default;
+    }
+
+    /* Feedback boxes */
+    .feedback-box {
+      margin-top: 1.25rem;
+      padding: 1rem 1.125rem;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      line-height: 1.6;
+      display: none;
+    }
+    .feedback-box.show { display: block; }
+
+    .feedback-correct   { background: #dcfce7; border-left: 3px solid var(--success); }
+    .feedback-incorrect { background: #fee2e2; border-left: 3px solid var(--error); }
+    .feedback-model     { background: #fffbeb; border-left: 3px solid #d97706; }
+
+    .feedback-label {
+      font-weight: 700;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+
+    .key-points {
+      margin-top: 0.75rem;
+      list-style: none;
+    }
+    .key-points li {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.3rem;
+    }
+    .key-points li::before {
+      content: "→";
+      color: #d97706;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* Submit */
+    .submit-area {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn-submit {
+      padding: 0.875rem 2.5rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      letter-spacing: 0.01em;
+    }
+    .btn-submit:hover  { background: #1d4ed8; }
+    .btn-submit:active { transform: scale(0.98); }
+    .btn-submit:disabled { background: var(--muted); cursor: default; }
+
+    .answer-hint {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* Score card */
+    #score-card {
+      display: none;
+      background: var(--surface);
+      border: 2px solid var(--accent);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    #score-card.show { display: block; }
+
+    .score-number {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .score-label {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .score-breakdown {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      font-size: 0.875rem;
+    }
+
+    .score-stat strong { display: block; font-size: 1.25rem; color: var(--text); }
+    .score-stat span   { color: var(--muted); }
+
+    footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="tag">Paper Quiz</div>
+    <h1 id="paper-title">Loading quiz…</h1>
+    <p class="subtitle" id="question-count"></p>
+  </header>
+
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+
+  <div id="score-card">
+    <div class="score-number" id="score-number"></div>
+    <div class="score-label">MCQ Score</div>
+    <div class="score-breakdown">
+      <div class="score-stat">
+        <strong id="stat-correct">–</strong>
+        <span>Correct</span>
+      </div>
+      <div class="score-stat">
+        <strong id="stat-wrong">–</strong>
+        <span>Incorrect</span>
+      </div>
+      <div class="score-stat">
+        <strong id="stat-open">–</strong>
+        <span>Open-ended</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="questions-container"></div>
+
+  <div class="submit-area">
+    <button class="btn-submit" id="submit-btn" onclick="submitQuiz()">Submit Quiz</button>
+    <p class="answer-hint" id="answer-hint"></p>
+  </div>
+
+  <footer>Generated by <strong>paper-tester</strong> · Claude Code skill</footer>
+</div>
+
+<script>
+  const QUIZ_DATA = "QUIZ_DATA_PLACEHOLDER";
+
+  let quiz;
+  try {
+    quiz = typeof QUIZ_DATA === 'object' ? QUIZ_DATA : JSON.parse(QUIZ_DATA);
+  } catch (e) {
+    document.getElementById('paper-title').textContent = 'Error loading quiz data.';
+    console.error('Failed to parse quiz data:', e);
+  }
+
+  const OPTION_LETTERS = ['A', 'B', 'C', 'D'];
+
+  function init() {
+    document.getElementById('paper-title').textContent = quiz.paper_title || 'Academic Paper Quiz';
+    const mcqCount = quiz.questions.filter(q => q.type === 'mcq').length;
+    const openCount = quiz.questions.filter(q => q.type === 'open').length;
+    document.getElementById('question-count').textContent =
+      `${mcqCount} multiple-choice · ${openCount} open-ended`;
+
+    const container = document.getElementById('questions-container');
+    quiz.questions.forEach((q, i) => {
+      container.appendChild(q.type === 'mcq' ? buildMCQ(q, i) : buildOpen(q, i));
+    });
+
+    updateProgress();
+    document.querySelectorAll('input[type="radio"]').forEach(r => {
+      r.addEventListener('change', () => {
+        updateProgress();
+        const card = r.closest('.question-card');
+        card.classList.add('answered');
+      });
+    });
+    document.querySelectorAll('.open-textarea').forEach(t => {
+      t.addEventListener('input', updateProgress);
+    });
+  }
+
+  function buildMCQ(q, idx) {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = `card-${q.id}`;
+
+    const optionsHTML = q.options.map((opt, oi) => `
+      <div>
+        <input type="radio" name="q${q.id}" id="q${q.id}_o${oi}" value="${oi}">
+        <label class="option-label" for="q${q.id}_o${oi}" id="label-q${q.id}_o${oi}">
+          <span class="option-indicator">${OPTION_LETTERS[oi]}</span>
+          <span>${opt}</span>
+        </label>
+      </div>
+    `).join('');
+
+    card.innerHTML = `
+      <div class="question-meta">
+        <span class="question-num">Q${idx + 1}</span>
+        <span class="question-type-badge badge-mcq">Multiple Choice</span>
+      </div>
+      <p class="question-text">${escHtml(q.question)}</p>
+      <div class="options-list">${optionsHTML}</div>
+      <div class="feedback-box" id="feedback-${q.id}"></div>
+    `;
+    return card;
+  }
+
+  function buildOpen(q, idx) {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = `card-${q.id}`;
+    card.innerHTML = `
+      <div class="question-meta">
+        <span class="question-num">Q${idx + 1}</span>
+        <span class="question-type-badge badge-open">Open-Ended</span>
+      </div>
+      <p class="question-text">${escHtml(q.question)}</p>
+      <textarea class="open-textarea" id="open-${q.id}"
+        placeholder="Write your answer here…" rows="5"></textarea>
+      <div class="feedback-box" id="feedback-${q.id}"></div>
+    `;
+    return card;
+  }
+
+  function updateProgress() {
+    const total = quiz.questions.length;
+    let answered = 0;
+    quiz.questions.forEach(q => {
+      if (q.type === 'mcq') {
+        if (document.querySelector(`input[name="q${q.id}"]:checked`)) answered++;
+      } else {
+        const ta = document.getElementById(`open-${q.id}`);
+        if (ta && ta.value.trim().length > 10) answered++;
+      }
+    });
+    document.getElementById('progress-fill').style.width = `${(answered / total) * 100}%`;
+    const remaining = total - answered;
+    document.getElementById('answer-hint').textContent =
+      remaining > 0 ? `${remaining} question${remaining !== 1 ? 's' : ''} remaining` : 'All answered — ready to submit!';
+  }
+
+  function submitQuiz() {
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Submitted';
+
+    let mcqCorrect = 0, mcqTotal = 0, openTotal = 0;
+
+    quiz.questions.forEach(q => {
+      const card = document.getElementById(`card-${q.id}`);
+      const fb   = document.getElementById(`feedback-${q.id}`);
+
+      if (q.type === 'mcq') {
+        mcqTotal++;
+        const selected = document.querySelector(`input[name="q${q.id}"]:checked`);
+        const chosenIdx = selected ? parseInt(selected.value, 10) : -1;
+        const isCorrect = chosenIdx === q.correct;
+        if (isCorrect) mcqCorrect++;
+
+        // Highlight options
+        q.options.forEach((_, oi) => {
+          const lbl = document.getElementById(`label-q${q.id}_o${oi}`);
+          if (!lbl) return;
+          if (oi === q.correct) lbl.classList.add('correct-answer');
+          else if (oi === chosenIdx && !isCorrect) lbl.classList.add('wrong-answer');
+        });
+
+        // Disable all radios
+        document.querySelectorAll(`input[name="q${q.id}"]`).forEach(r => r.disabled = true);
+
+        card.classList.remove('answered');
+        card.classList.add(isCorrect ? 'correct' : 'incorrect');
+
+        fb.innerHTML = `
+          <div class="feedback-label">${isCorrect ? '✓ Correct' : '✗ Incorrect'}</div>
+          <div>${escHtml(q.explanation)}</div>
+        `;
+        fb.className = `feedback-box show ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+
+      } else {
+        openTotal++;
+        const ta = document.getElementById(`open-${q.id}`);
+        if (ta) ta.disabled = true;
+        card.classList.add('revealed');
+
+        const keyPointsHTML = q.key_points
+          .map(kp => `<li>${escHtml(kp)}</li>`)
+          .join('');
+
+        fb.innerHTML = `
+          <div class="feedback-label">Model Answer</div>
+          <div>${escHtml(q.model_answer)}</div>
+          ${q.key_points.length ? `
+            <ul class="key-points" style="margin-top:0.75rem">
+              ${keyPointsHTML}
+            </ul>
+          ` : ''}
+        `;
+        fb.className = 'feedback-box show feedback-model';
+      }
+    });
+
+    // Score card
+    document.getElementById('score-number').textContent =
+      `${mcqCorrect} / ${mcqTotal}`;
+    document.getElementById('stat-correct').textContent = mcqCorrect;
+    document.getElementById('stat-wrong').textContent = mcqTotal - mcqCorrect;
+    document.getElementById('stat-open').textContent = openTotal;
+    document.getElementById('score-card').classList.add('show');
+    document.getElementById('score-card').scrollIntoView({ behavior: 'smooth' });
+
+    document.getElementById('progress-fill').style.width = '100%';
+  }
+
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  if (quiz) init();
+</script>
+</body>
+</html>
