@@ -1,0 +1,26 @@
+{
+  "name": "paper-quiz",
+  "description": "Turn any academic paper into a browser-based quiz powered by Claude Opus",
+  "owner": {
+    "name": "Christos Chalkias",
+    "url": "https://github.com/chrishalkias"
+  },
+  "plugins": [
+    {
+      "name": "paper-quiz",
+      "description": "Turn any academic paper (PDF or URL) into a browser-based quiz. Generates MCQ + open-ended questions via Claude Opus and opens a self-contained HTML quiz in your browser.",
+      "version": "1.0.0",
+      "source": "./",
+      "author": {
+        "name": "Christos Chalkias",
+        "url": "https://github.com/chrishalkias"
+      },
+      "homepage": "https://github.com/chrishalkias/paper-quiz",
+      "repository": "https://github.com/chrishalkias/paper-quiz",
+      "license": "MIT",
+      "keywords": ["skills", "quiz", "academic", "research", "papers", "learning", "opus", "pdf"],
+      "category": "research",
+      "strict": false
+    }
+  ]
+}

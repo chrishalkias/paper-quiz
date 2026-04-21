@@ -1,22 +1,22 @@
 ---
-name: paper-tester
-description: Use when the user wants to test or quiz themselves on an academic paper. Invoked with /paper-tester followed by a file path or URL.
+name: paper-quiz
+description: Use when the user wants to test or quiz themselves on an academic paper. Invoked with /paper-quiz followed by a file path or URL.
 ---
 
-# Paper Tester
+# Paper Quiz
 
 Generate a browser-based quiz for an academic paper, then open it automatically.
 
 ## Usage
 
 ```
-/paper-tester <path-to-pdf-or-url>
+/paper-quiz <path-to-pdf-or-url>
 ```
 
 **Examples:**
 ```
-/paper-tester ~/Downloads/attention-is-all-you-need.pdf
-/paper-tester https://arxiv.org/pdf/1706.03762
+/paper-quiz ~/Downloads/attention-is-all-you-need.pdf
+/paper-quiz https://arxiv.org/pdf/1706.03762
 ```
 
 ---
@@ -41,7 +41,7 @@ Store the full text content for the next step.
 
 ## Step 3 — Generate the quiz via the `tester` subagent
 
-Spawn the `Agent` tool with **`subagent_type: "paper-tester:tester"`** and pass it a prompt containing only the paper text:
+Spawn the `Agent` tool with **`subagent_type: "paper-quiz:tester"`** and pass it a prompt containing only the paper text:
 
 ```
 <full paper text from Step 2>
@@ -57,7 +57,7 @@ Wait for the agent to return the JSON string. Save it as `QUIZ_JSON`.
 
 Use `Glob` to find the quiz template with the pattern:
 ```
-**/paper-tester/quiz-template.html
+**/paper-quiz/quiz-template.html
 ```
 
 Read the file found. Store the content as `TEMPLATE_HTML`.
