@@ -2,8 +2,9 @@
 
 A Claude Code skill that turns any academic paper into an interactive browser-based quiz — powered by Claude Opus.
 
-![Quiz preview](docs/quiz-preview.png)
-
+<p align="center">
+<img src="docs/wordmark-dark.svg" width="360" alt="paper-tester"/>
+</p>
 ## What it does
 
 Give it a PDF path or arXiv URL. It reads the paper with Claude Opus, generates a quiz of multiple-choice and open-ended questions grounded in the paper's content, writes a self-contained HTML file, and opens it in your browser automatically.

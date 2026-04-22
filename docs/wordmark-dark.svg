@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 100" width="420" height="100">
+  <rect width="420" height="100" rx="12" fill="#1e2d4a"></rect>
+  <g transform="translate(10, 8) scale(0.82)">
+    <g transform="translate(68,56) rotate(40)">
+      <rect x="-5.5" y="-52" width="11" height="9" rx="2" fill="#e07a7a" stroke="#f0dea0" stroke-width="1.8" stroke-linejoin="round"></rect>
+      <rect x="-5.5" y="-44" width="11" height="6" fill="#c0b488" stroke="#f0dea0" stroke-width="1.6" stroke-linejoin="round"></rect>
+      <rect x="-5.5" y="-38" width="11" height="44" rx="1" fill="#f5c842" stroke="#f0dea0" stroke-width="1.8" stroke-linejoin="round"></rect>
+      <rect x="-2.5" y="-38" width="2.8" height="44" rx="1" fill="#fff" opacity="0.22"></rect>
+      <polygon points="-5.5,6 5.5,6 0,20" fill="#d4966a" stroke="#f0dea0" stroke-width="1.8" stroke-linejoin="round"></polygon>
+      <circle cx="0" cy="19" r="1.6" fill="#f0dea0"></circle>
+    </g>
+    <ellipse cx="18" cy="42" rx="8" ry="29" fill="#b89840" stroke="#f0dea0" stroke-width="2"></ellipse>
+    <ellipse cx="18" cy="42" rx="5" ry="26" fill="#d4aa58"></ellipse>
+    <ellipse cx="98" cy="42" rx="8" ry="29" fill="#b89840" stroke="#f0dea0" stroke-width="2"></ellipse>
+    <ellipse cx="98" cy="42" rx="5" ry="26" fill="#d4aa58"></ellipse>
+    <rect x="18" y="13" width="80" height="58" rx="2" fill="#f7edcc" stroke="#f0dea0" stroke-width="2"></rect>
+    <line x1="18" y1="13" x2="98" y2="13" stroke="#f0dea0" stroke-width="2"></line>
+    <line x1="18" y1="71" x2="98" y2="71" stroke="#f0dea0" stroke-width="2"></line>
+    <line x1="28" y1="27" x2="88" y2="27" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" opacity="0.6"></line>
+    <line x1="28" y1="36" x2="88" y2="36" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" opacity="0.6"></line>
+    <line x1="28" y1="45" x2="80" y2="45" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" opacity="0.6"></line>
+    <rect x="35" y="5" width="12" height="14" rx="1.5" fill="#4a6898" stroke="#8aabdf" stroke-width="1.8"></rect>
+    <ellipse cx="41" cy="7" rx="28" ry="7.5" fill="#4a6898" stroke="#8aabdf" stroke-width="2"></ellipse>
+    <rect x="21" y="-9" width="40" height="9" rx="2.5" fill="#4a6898" stroke="#8aabdf" stroke-width="2"></rect>
+    <circle cx="41" cy="-9" r="4" fill="#4a6898" stroke="#8aabdf" stroke-width="1.8"></circle>
+    <path d="M63,-5 C71,1 73,11 71,22" stroke="#f5c842" stroke-width="1.8" stroke-linecap="round" fill="none"></path>
+    <circle cx="71" cy="24" r="4.5" fill="#f5c842" stroke="#f0dea0" stroke-width="1.5"></circle>
+  </g>
+  <text x="108" y="52" font-family="Georgia, &#39;Times New Roman&#39;, serif" font-size="36" font-weight="700" fill="#f7edcc" letter-spacing="-0.5">paper-tester</text>
+  <text x="110" y="72" font-family="Georgia, &#39;Times New Roman&#39;, serif" font-size="15" fill="#c9a84c" letter-spacing="0.3">know what you read</text>
+</svg>
