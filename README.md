@@ -1,10 +1,11 @@
 # paper-quiz
 
-A Claude Code skill that turns any academic paper into an interactive browser-based quiz — powered by Claude Opus.
+A Claude Code skill that turns any academic paper into an interactive browser-based quiz, powered by Claude Opus.
 
 <p align="center">
 <img src="docs/wordmark-dark.svg" width="360" alt="paper-tester"/>
 </p>
+
 ## What it does
 
 Give it a PDF path or arXiv URL. It reads the paper with Claude Opus, generates a quiz of multiple-choice and open-ended questions grounded in the paper's content, writes a self-contained HTML file, and opens it in your browser automatically.
@@ -12,7 +13,7 @@ Give it a PDF path or arXiv URL. It reads the paper with Claude Opus, generates 
 - **6–10 questions** per paper (5–7 MCQ + 3 open-ended)
 - **Auto-graded MCQ** with explanations revealed on submit
 - **Open-ended** questions show a model answer + key points for self-assessment
-- **Zero dependencies** — output is a single portable HTML file
+- **Zero dependencies** - output is a single portable HTML file
 - **Runs entirely offline** after generation
 
 ## Usage
