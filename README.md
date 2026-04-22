@@ -1,10 +1,9 @@
-# paper-quiz
+<p align="center">
+<img src="docs/wordmark-dark.svg" width="4000" alt="paper-tester"/>
+</p>
 
 A Claude Code skill that turns any academic paper into an interactive browser-based quiz, powered by Claude Opus.
 
-<p align="center">
-<img src="docs/wordmark-dark.svg" width="360" alt="paper-tester"/>
-</p>
 
 ## What it does
 
