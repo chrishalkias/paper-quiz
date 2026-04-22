@@ -26,6 +26,6 @@
     <path d="M63,-5 C71,1 73,11 71,22" stroke="#f5c842" stroke-width="1.8" stroke-linecap="round" fill="none"></path>
     <circle cx="71" cy="24" r="4.5" fill="#f5c842" stroke="#f0dea0" stroke-width="1.5"></circle>
   </g>
-  <text x="108" y="52" font-family="Georgia, &#39;Times New Roman&#39;, serif" font-size="36" font-weight="700" fill="#f7edcc" letter-spacing="-0.5">paper-tester</text>
+  <text x="108" y="52" font-family="Georgia, &#39;Times New Roman&#39;, serif" font-size="36" font-weight="700" fill="#f7edcc" letter-spacing="-0.5">paper-quiz</text>
   <text x="110" y="72" font-family="Georgia, &#39;Times New Roman&#39;, serif" font-size="15" fill="#c9a84c" letter-spacing="0.3">know what you read</text>
 </svg>
