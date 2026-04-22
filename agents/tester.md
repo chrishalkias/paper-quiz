@@ -43,6 +43,8 @@ Return ONLY a valid JSON object. No markdown fences, no explanation, no preamble
 - Each question has exactly 4 options
 - Exactly one option is correct; `correct` is its 0-based index
 - Distractors must be plausible — no obviously wrong answers
+- All four options must be comparable in length and grammatical complexity. Do not let the correct answer stand out by being longer, more specific, or more carefully worded than the distractors. Distractors should be written with the same level of detail and confidence as the correct answer
+- Vary the position of the correct answer across questions — do not cluster correct answers at a particular index
 - Explanation must address why the correct answer is right AND why the main distractor is wrong
 
 **Open-ended questions (3 total):**
