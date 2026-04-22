@@ -23,13 +23,18 @@ Give it a PDF path or arXiv URL. It reads the paper with Claude Opus, generates 
 
 ## Installation
 
-Install via the Claude Code plugin system:
+Add the marketplace and install:
 
 ```bash
-claude plugins install chrishalkias/paper-quiz
+claude plugins marketplace add chrishalkias/paper-quiz
+claude plugins install paper-quiz@paper-quiz
 ```
 
-Then use the `/paper-quiz` slash command in any Claude Code session.
+Then use the `/paper-quiz` slash command in any Claude Code session. To pick up future updates:
+
+```bash
+claude plugins update paper-quiz
+```
 
 ## How it works
 
@@ -57,10 +62,15 @@ The `tester` subagent runs on **Claude Opus** for best comprehension of dense ac
 
 ```
 paper-quiz/
-  SKILL.md               # Skill definition — orchestration steps
-  quiz-template.html     # Self-contained quiz UI (vanilla JS, no CDN)
+  .claude-plugin/
+    plugin.json          # Plugin metadata (skills + agents paths)
+    marketplace.json     # Marketplace listing
+  skills/
+    paper-quiz/
+      SKILL.md           # Orchestration steps for /paper-quiz
+      quiz-template.html # Self-contained quiz UI (vanilla JS, no CDN)
   agents/
-    tester.md            # Opus subagent — paper → quiz JSON
+    tester.md            # Opus subagent — paper text → quiz JSON
   docs/
     quiz-preview.png
 ```
