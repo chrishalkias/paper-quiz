@@ -18,5 +18,7 @@
     "learning",
     "opus",
     "pdf"
-  ]
+  ],
+  "skills": "./skills/",
+  "agents": "./agents/"
 }
